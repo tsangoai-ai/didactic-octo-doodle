@@ -1,0 +1,56 @@
+{
+  "name": "Log",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "session": {
+      "type": "string",
+      "enum": [
+        "AM",
+        "PM"
+      ],
+      "description": "Check-in session"
+    },
+    "log_type": {
+      "type": "string",
+      "enum": [
+        "AM_PM",
+        "Work",
+        "Personal",
+        "EDGE_Coach"
+      ],
+      "default": "AM_PM"
+    },
+    "user_feeling": {
+      "type": "string"
+    },
+    "focus_area": {
+      "type": "string"
+    },
+    "work_summary": {
+      "type": "string"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "insights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "markdown_content": {
+      "type": "string",
+      "description": "Full markdown log entry"
+    }
+  },
+  "required": [
+    "date"
+  ]
+}

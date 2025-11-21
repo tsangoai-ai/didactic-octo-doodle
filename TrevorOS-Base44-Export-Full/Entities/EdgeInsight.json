@@ -1,0 +1,59 @@
+{
+  "name": "EdgeInsight",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Insight title"
+    },
+    "edge_category": {
+      "type": "string",
+      "enum": [
+        "Explore",
+        "Develop",
+        "Grow",
+        "Execute"
+      ],
+      "description": "EDGE framework category"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "pattern",
+        "blind_spot",
+        "strength",
+        "action"
+      ],
+      "description": "Type of insight"
+    },
+    "content": {
+      "type": "string",
+      "description": "Insight content in markdown"
+    },
+    "coaching_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Coaching questions for reflection"
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Suggested action items"
+    },
+    "analysis_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the analysis was run"
+    }
+  },
+  "required": [
+    "title",
+    "edge_category",
+    "type",
+    "content"
+  ]
+}

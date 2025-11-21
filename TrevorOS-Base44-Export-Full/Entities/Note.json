@@ -1,0 +1,51 @@
+{
+  "name": "Note",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Note title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown content"
+    },
+    "note_type": {
+      "type": "string",
+      "enum": [
+        "atomic",
+        "evergreen",
+        "fleeting",
+        "literature",
+        "project",
+        "area",
+        "resource"
+      ],
+      "default": "fleeting"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of related notes"
+    },
+    "source_capture_id": {
+      "type": "string"
+    },
+    "essence": {
+      "type": "string",
+      "description": "One-sentence insight"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "name": "Capture",
+  "type": "object",
+  "properties": {
+    "raw_content": {
+      "type": "string",
+      "description": "Original captured content"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "url",
+        "image",
+        "file"
+      ],
+      "description": "Type of input"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL if file/image uploaded"
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "Extracted/processed text content"
+    },
+    "ai_classification": {
+      "type": "string",
+      "enum": [
+        "Task",
+        "Project",
+        "Resource",
+        "Idea",
+        "Reflection",
+        "Meeting",
+        "Transcript",
+        "Journal",
+        "Reference",
+        "PKM",
+        "Inbox"
+      ],
+      "description": "AI-determined content type"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI-generated summary"
+    },
+    "ai_key_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Extracted key points"
+    },
+    "ai_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Suggested tags"
+    },
+    "suggested_route": {
+      "type": "string",
+      "enum": [
+        "AM_PM_Log",
+        "Work_Log",
+        "Personal_Log",
+        "EDGE_Coach_Log",
+        "PKM_Note",
+        "Task_List",
+        "Inbox"
+      ],
+      "description": "AI-suggested destination"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "classified",
+        "routed",
+        "archived"
+      ],
+      "default": "pending",
+      "description": "Processing status"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "AI classification confidence (0-100)"
+    }
+  },
+  "required": [
+    "raw_content",
+    "content_type"
+  ]
+}
