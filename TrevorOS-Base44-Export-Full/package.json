@@ -1,0 +1,60 @@
+{
+  "name": "trevoros-v2",
+  "version": "1.0.0",
+  "description": "Trevor's personal operating system: AM/PM check-ins, PKM capture, OCR, transcript processing, and Second Brain growth powered by LLMs, Make, Google Sheets, GitHub, and Markdown.",
+  "author": "Trevor + AI Assistants",
+  "license": "MIT",
+
+  "scripts": {
+    "am-checkin": "Initiate AM check-in flow, return JSON + Markdown",
+    "pm-checkin": "Initiate PM reflection flow, return JSON + Markdown",
+    "capture": "Ingest arbitrary content (text/link/image) and classify it",
+    "route": "Decide where a capture should go (Sheets | Logs | PKM | Inbox)",
+    "summarize": "Summarize content into PKM-ready structured output",
+    "ocr": "Extract and process text from images/screenshots",
+    "transcript": "Extract video transcripts (YouTube/Facebook/Shorts)",
+    "edge-coach": "Provide reflection and planning using the EDGE framework",
+    "append-log": "Append Markdown entries to GitHub logs",
+    "create-capture-note": "Create structured PKM entries in /capture/"
+  },
+
+  "dependencies": {
+    "apple-shortcuts": "Capture via Share Sheet (text/images/URLs/files).",
+    "make.com": "Webhook → routing → GitHub → Sheets automation engine.",
+    "google-sheets": "Structured AM/PM timeline and task log.",
+    "github-api": "Append log entries and create PKM notes in repo.",
+    "markdown-vault": "Logs, evergreen notes, topics, projects.",
+    "ocr-service": "Built-in iOS OCR or external API for screenshots.",
+    "transcript-service": "YouTube/Facebook transcript extraction.",
+    "llm-runtime": "Base44, ChatGPT, or other LLM platforms."
+  },
+
+  "config": {
+    "checkin": {
+      "schema": {
+        "date": "string (YYYY-MM-DD)",
+        "session": "string (AM | PM)",
+        "user_feeling": "string",
+        "focus_area": "string",
+        "work_summary": "string",
+        "tasks": "array of strings"
+      }
+    },
+
+    "logFiles": {
+      "work": "logs/Work_Log.md",
+      "personal": "logs/Personal_Log.md",
+      "coach": "logs/EDGE_Coach_Log.md"
+    },
+
+    "pkm": {
+      "directories": [
+        "capture/",
+        "evergreen/",
+        "projects/",
+        "topics/",
+        "reference/"
+      ]
+    }
+  }
+}
