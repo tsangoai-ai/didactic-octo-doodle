@@ -1,0 +1,154 @@
+name: trevoros-v2
+version: 1.0.0
+description: >
+  Trevor's personal operating system that coordinates capture, logging,
+  PKM, and coaching via LLMs, Make, Google Sheets, and Markdown.
+
+layers:
+  - name: capture
+    description: >
+      Ingest content from Shortcuts, Notes, and LLM chats. Handle text, links,
+      images/screenshots, and other snippets.
+    entrypoints:
+      - apple_shortcut: Edge Capture
+      - llm_conversation: TrevorOS v2 (Base44 project)
+      - tags:
+          - "#summarize"
+          - "#transcript"
+          - "#gettherext"
+          - "#reflect"
+
+  - name: processing_routing
+    description: >
+      Make.com scenarios triggered via webhook; classify, structure, and
+      route data to logs and PKM storage.
+    components:
+      - webhook: "primary entry for JSON payloads"
+      - router:
+          rules:
+            - condition: "mode == 'checkin'"
+              target: "sheets.work_log"
+            - condition: "mode == 'ocr'"
+              target: "pkm.ocr_log"
+            - condition: "mode == 'video_transcript'"
+              target: "pkm.video_log"
+            - condition: "mode == 'article_summary'"
+              target: "pkm.reading_log"
+            - condition: "mode == 'reflection_log'"
+              target: "logs.work_or_personal"
+            - condition: "default"
+              target: "pkm.inbox"
+
+  - name: storage
+    description: "Persistent truth in Google Sheets and Markdown files."
+    sheets:
+      - id: work_log
+        columns:
+          - date
+          - session
+          - focus_area
+          - work_summary
+          - tasks
+    markdown:
+      - file: Work_Log.md
+        purpose: "Daily work reflections and tasks"
+      - file: Personal_Log.md
+        purpose: "Personal/emotional reflections"
+      - file: EDGE_Coach_Log.md
+        purpose: "Coaching-oriented notes and insights"
+      - file: Evergreen_Notes/
+        purpose: "Atomic and permanent notes for PKM"
+      - file: Projects/
+        purpose: "Per-project documentation"
+      - file: Topics/
+        purpose: "Thematic maps of content"
+
+  - name: insight_coaching
+    description: >
+      LLM agents (e.g., Base44) that run AM/PM check-ins, interpret captured
+      content, generate summaries, and tie actions to long-term goals using
+      the EDGE framework.
+
+schemas:
+  checkin_json:
+    type: object
+    required:
+      - date
+      - session
+      - user_feeling
+      - focus_area
+      - work_summary
+      - tasks
+    properties:
+      date:
+        type: string
+        description: "ISO date, e.g. 2025-11-12"
+      session:
+        type: string
+        enum: ["AM", "PM"]
+      user_feeling:
+        type: string
+      focus_area:
+        type: string
+      work_summary:
+        type: string
+      tasks:
+        type: array
+        items:
+          type: string
+
+  pkm_object:
+    type: object
+    properties:
+      type:
+        type: string
+        description: "resource | idea | reflection | meeting | transcript | template | decision | automation | inbox"
+      title:
+        type: string
+      summary:
+        type: string
+      content:
+        type: string
+        description: "Markdown-ready body"
+      tags:
+        type: array
+        items:
+          type: string
+      related:
+        type: array
+        items:
+          type: string
+      tasks_extracted:
+        type: array
+        items:
+          type: string
+
+behaviors:
+  - name: checkin_flow
+    trigger: "user indicates AM or PM check-in"
+    steps:
+      - "Ask brief targeted questions about feelings, focus, and tasks."
+      - "Generate a checkin_json object."
+      - "Generate a Markdown log block for the appropriate log file."
+      - "Optionally generate PKM objects for key insights."
+
+  - name: capture_flow
+    trigger: "user sends content outside of a check-in"
+    steps:
+      - "Classify content type."
+      - "Extract summary, tasks, and key metadata."
+      - "Generate PKM object(s) and/or log snippets."
+      - "If unclear, route to PKM inbox."
+
+  - name: edge_coach
+    trigger: "user asks for planning, reflection, or coaching"
+    steps:
+      - "Use Envision → Divide → Guardrails → Execute to structure thinking."
+      - "Map outcomes to tasks and notes."
+      - "Return actionable recommendations and structured outputs."
+
+tone:
+  description: >
+    Direct, clear, and kind. Witty when appropriate. Helps reduce overwhelm,
+    favors structure over fluff, and always aims to make the next action and
+    the bigger picture clearer.
